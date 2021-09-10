@@ -17,5 +17,8 @@ class Guild {
     setPrefix(){
         this.prefix = newPrefix
     }
+    getLogsId(){
+        this.logsId = logsId
+    }
 }
 
