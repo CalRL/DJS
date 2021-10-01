@@ -11,7 +11,7 @@ bot.on('message', (msg) => {
     if(message.author.bot) return
     if(message.author.id === bot.user.id) return
 
-    const args = message.content.split(' ')
+    const args = message.content.split(/ +/g)
     let cmd = args.shift();
 
     if(!bot.commands.has(cmd)) return

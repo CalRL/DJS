@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
 const Embeds = require('../embeds.js')
-const Axios = require('axios')
 
 const CAT_API_KEY = 'f4d75e99-7060-4ecf-84c6-2b5da587491a'
 
@@ -13,14 +12,17 @@ module.exports = {
         
         message.channel.send('*Please wait...*').then(message => {
             Axios.get(link, { header: { 'x-api-key': CAT_API_KEY } }).then(response => {
-                const catSuccessEmbed = Embeds.catSuccessEmbed(guild.getLanguage(), response.data[0].url)
-                message.channel.send(catSuccessEmbed).then(() => {
-                    message.delete()
+                const catSuccessEmbed = new Discord.MessageEmbed()
+                .setImage(response.data[0].url)
+                .setAuthor(`${user.username}#${user.discriminator}`)
+                .setColor('#000000')
+                message.delete().then (() => {
+                    message.channel.send(catSuccessEmbed)
                 })
             }).catch(err => {
                 console.log(err)
-                message.channel.send(Embeds.catErrorEmbed(guild.getLanguage())).then(() => {
-                    message.delete()
+                message.channel.send('Error! Couldnt get the picture!').then(() => {
+                    message.delete();
                 })
             })
         })
